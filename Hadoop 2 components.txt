@@ -1,0 +1,23 @@
+
+Apache Hadoop HDFS Architecture follows a Master/Slave topology where a cluster comprises one or more NameNode (Master node) and all the other nodes are DataNodes (Slave nodes). 
+
+Following daemon runs in HDFS cluster:
+
+• NameNode: It is the master daemon that maintains and manages the data block present in the DataNodes. Manages all metadate for files. Managed in fsimage and edits.log file.
+
+• Secondary NameNode: The Secondary NameNode works concurrently with the primary NameNode asa helper daemon. It performs checkpointing.
+
+This is now available in HA wher fsimage and edits are stored and shared on an NFS volume for faster restarts and resilience.
+
+• DataNode: DataNodes are the slave nodes in HDFS. It is responsible of storing the data as blocks. Sends block reports and heatbeats back to Namenodes
+
+For processing , YARN is used (Yet Another Resource Negotiator). The daemons of YARN are ResourceManager and NodeManager.
+
+• ResourceManager: It is a cluster level (one for each cluster) component and runs on the master machine. It manages resources and schedule applications running on top of YARN.
+
+• NodeManager: It is a node level component (one on each node) and runs on each slave machine. It is responsible for managing containers and monitoring resource utilization in each container. It also keeps track of node health and log management. It continuously communicates with ResourceManager to remain up-to-date.
+
+Note -- Node manager and Rescource manager replace job Tracker and Task Tracker in previous version.
+
+
+• JobHistoryServer: JobHistoryServer is responsible for servicing all job history related requests from client.
